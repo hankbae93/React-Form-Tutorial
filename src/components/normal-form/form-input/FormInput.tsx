@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { InputProps } from "../NormalForm.type";
 
-interface InputProps {
-	placeholder: string;
-	setState: React.Dispatch<React.SetStateAction<string>>;
-	required?: boolean;
-}
-
+import { Label, Input, ErrorMessage } from "./FormInput.elements";
 const FormInput = (props: InputProps) => {
+	const [focused, setFocused] = useState(false);
+	const { label, onChange, id, errorMessage, ...inputProps } = props;
+
+	const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+		setFocused(true);
+	};
+
+	const handleLastFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+		inputProps.name === "confirmPassword" && setFocused(true);
+	};
+
 	return (
 		<div>
-			<label htmlFor=''>UserName</label>
-			<input
-				type='text'
-				name=''
-				id=''
-				placeholder={props.placeholder}
-				onChange={(e) => props.setState(e.target.value)}
+			<Label htmlFor=''>{label}</Label>
+			<Input
+				{...inputProps}
+				onChange={onChange}
+				onBlur={handleFocus}
+				onFocus={handleLastFocus}
+				focused={focused}
 			/>
+			<ErrorMessage>{errorMessage}</ErrorMessage>
 		</div>
 	);
 };
