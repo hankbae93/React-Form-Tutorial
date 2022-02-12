@@ -1,8 +1,5 @@
-export interface ObjType {
+export interface FormDataType {
 	[index: string]: string;
-}
-
-export interface FormDataType extends ObjType {
 	username: string;
 	email: string;
 	birthday: string;
